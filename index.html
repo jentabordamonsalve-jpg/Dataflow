@@ -174,9 +174,24 @@ function sendChat(){
     box.innerHTML += `<div class="msg-user">${input.value}</div>`;
 
     // Respuesta bot
-    box.innerHTML += `<div class="msg-bot">Estoy procesando tu consulta 😊</div>`;
+let userText = input.value.toLowerCase();
 
-    input.value = "";
+// Lógica simple de respuestas
+let respuesta = "Estoy procesando tu consulta 😊";
+
+if (userText.includes("inventario")) {
+    respuesta = "Aquí tienes el inventario actualizado 📦";
+}
+
+if (userText.includes("bogota")) {
+    respuesta = "Inventario para Bogotá: 120 unidades disponibles.";
+}
+
+if (userText.includes("tendencias")) {
+    respuesta = "Estas son las tendencias más importantes 📊";
+}
+
+box.innerHTML += `<div class="msg-bot">${respuesta}</div>`;
     box.scrollTop = box.scrollHeight;
 }
 

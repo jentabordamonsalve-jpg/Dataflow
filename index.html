@@ -1,152 +1,275 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>VICK DATAFLOW - Final</title>
 
-<!-- Dependencias -->
-https://cdn.jsdelivr.net/npm/chart.js</script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaftps://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js</script>
-https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js</script>
-https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js</script>
+<!-- ▬▬▬ DEPENDENCIAS CORRECTAS ▬▬▬ -->
 
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- html2canvas + jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- ▬▬▬ ESTILOS ▬▬▬ -->
 <style>
 :root{--vick-blue:#004c97;--vick-light:#1a73e8;--vick-green:#009e60;--bg:#f3f8fc;--card:#fff;--text:#12202b;--muted:#667085}
 :root.dark{--vick-blue:#05223a;--vick-light:#0b2b4a;--vick-green:#13b76a;--bg:#0f1720;--card:#0b1220;--text:#e6eef6;--muted:#9fb0c6}
-*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.35}
-.sidebar{width:270px;background:var(--vick-blue);color:#fff;height:100vh;position:fixed;padding-top:18px;box-shadow:0 6px 18px rgba(0,0,0,.12);overflow:auto}
-.sidebar h2{text-align:center;margin:0 0 12px;font-size:20px;padding-bottom:6px}.sidebar a{display:block;padding:12px 18px;color:white;text-decoration:none;font-weight:700;border-bottom:1px solid rgba(255,255,255,.06)}.sidebar a:hover{background:var(--vick-light)}
-.content{margin-left:290px;padding:22px;max-width:1200px}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}.header .actions{display:flex;gap:8px;align-items:center}
-.btn{background:var(--vick-light);color:#fff;padding:10px 12px;border-radius:8px;border:none;font-weight:700;cursor:pointer}.btn.secondary{background:transparent;border:2px solid var(--vick-blue);color:var(--vick-blue)}
-.card{background:var(--card);border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 10px 30px rgba(12,35,70,.06)}.chart-container{height:320px}.row{display:grid;grid-template-columns:1fr 380px;gap:18px;margin-bottom:18px}
-#map{height:380px;border-radius:12px}
-#avatar-btn{position:fixed;right:24px;bottom:24px;width:86px;height:86px;border-radius:50%;background:var(--vick-green);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(0,0,0,.18);cursor:pointer;z-index:1400}
-#avatar-btn img{width:78px;height:78px;border-radius:50%;object-fit:cover;display:block}
-#chat-panel{position:fixed;right:24px;bottom:120px;width:360px;height:520px;background:var(--card);border-radius:12px;box-shadow:0 20px 60px rgba(2,22,50,.2);display:none;flex-direction:column;z-index:1400}
-.chat-header{background:var(--vick-blue);color:#fff;padding:12px;border-radius:12px 12px 0 0;font-weight:700}.chat-body{flex:1;overflow:auto;padding:12px}.chat-input{display:flex;padding:12px;border-top:1px solid rgba(0,0,0,.06)}.chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}.chat-input button{margin-left:8px;padding:10px 12px;border-radius:8px;border:none;background:var(--vick-green);color:#fff;font-weight:700}
-.msg-bot{background:#eefaf1;margin-bottom:10px;padding:8px;border-radius:8px}
-.msg-user{background:#e8f1ff;margin-bottom:10px;padding:8px;border-radius:8px;text-align:right}
-.notification{position:fixed;top:20px;right:20px;background:var(--vick-light);color:#fff;padding:12px 16px;border-radius:8px;display:none;z-index:1500}
-@media(max-width:1000px){.sidebar{display:none}.content{margin:12px}.row{grid-template-columns:1fr}}
+body{margin:0;background:var(--bg);font-family:Arial;color:var(--text);}
+
+/* SIDEBAR */
+.sidebar{
+    width:260px;background:var(--vick-blue);color:#fff;
+    height:100vh;position:fixed;top:0;left:0;padding:20px;
+}
+.sidebar h2{text-align:center;margin-top:0}
+.sidebar a{
+    color:white;text-decoration:none;display:block;
+    padding:10px;margin-bottom:6px;border-radius:6px;
+}
+.sidebar a:hover{background:var(--vick-light)}
+
+.content{margin-left:280px;padding:25px}
+
+/* Tarjetas */
+.card{
+    background:var(--card);padding:20px;border-radius:12px;
+    margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+
+.chart-container{height:300px}
+
+/* Avatar */
+#avatar-btn{
+    position:fixed;bottom:30px;right:30px;width:70px;height:70px;
+    background:var(--vick-green);border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+}
+#avatar-btn img{width:60px;height:60px;border-radius:50%}
+
+/* Chat Bot */
+#chat-panel{
+    position:fixed;bottom:120px;right:30px;width:330px;height:480px;
+    background:var(--card);border-radius:12px;display:none;
+    box-shadow:0 10px 40px rgba(0,0,0,.2);flex-direction:column;
+}
+.chat-header{
+    background:var(--vick-blue);padding:12px;color:white;
+    border-radius:12px 12px 0 0;font-weight:bold;
+}
+.chat-body{flex:1;padding:12px;overflow-y:auto}
+.msg-bot{background:#e6f8e8;padding:8px;margin-bottom:10px;border-radius:8px}
+.msg-user{background:#dbe8ff;padding:8px;margin-bottom:10px;border-radius:8px;text-align:right}
+
+.chat-input{padding:10px;display:flex;gap:8px}
+.chat-input input{flex:1;padding:8px;border:1px solid #ccc;border-radius:8px}
+.chat-input button{padding:8px 12px;background:var(--vick-green);border:none;color:white;border-radius:8px;font-weight:bold}
 </style>
 </head>
+
 <body>
 
+<!-- ▬▬▬ SIDEBAR ▬▬▬ -->
 <div class="sidebar">
   <h2>VICK DATAFLOW</h2>
-  <a href="#Dashboard</a>
-  #inventariosInventarios</a>
-  <a href="#sTendencias</a>
-  #recomendacionesRecomendaciones</a>
-  #mapaMapa Interactivo</a>
-  #historicoHistórico Mensual</a>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#inventarios">Inventarios</a>
+  <a href="#tendencias">Tendencias</a>
+  <a href="#mapa">Mapa Interactivo</a>
+  <a href="#historico">Histórico Mensual</a>
 </div>
 
+<!-- ▬▬▬ CONTENIDO ▬▬▬ -->
 <div class="content">
-  <div class="header">
-    <div>
-      <h1 style="margin:0;font-size:22px">VICK DATAFLOW - Procter & Gamble</h1>
-      <div class="small" style="margin-top:6px">Análisis de demanda e inventarios | Vick Vaporub</div>
-    </div>
-    <div class="actions">
-      <button class="btn" id="exportPdfBtn">⬇ Exportar PDF</button>
-      <button class="btn secondary" id="darkModeBtn">🌙 Modo Oscuro</button>
-    </div>
-  </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard" class="card">
-    <h3>Demanda y Proyección IA</h3>
-    <div class="demanda-buttons">
-      <button class="btn" onclick="setDemandaMode('real')">📊 Demanda real</button>
-      <button class="btn" onclick="setDemandaMode('ia')">🤖 Proyección IA</button>
-      <button class="btn" onclick="setDemandaMode('tendencias')">🦠 Tendencias</button>
-      <button class="btn" onclick="setDemandaMode('clima')">❄️ Clima frío</button>
-      <button class="btn secondary" onclick="setDemandaMode('mixta')">🔮 Demanda compuesta</button>
-      <button class="btn secondary" onclick="setDemandaMode('ambas')">🔁 Ver ambas</button>
-    </div>
-    <div class="chart-container"><canvas id="demandaChart"></canvas></div>
-    <div style="margin-top:12px" id="prediccionWrapper" class="card">
-      <h4 style="margin:0 0 8px">Proyección IA (6 días)</h4>
-      <div class="chart-container"><canvas id="prediccionChart"></canvas></div>
-    </div>
-  </div>
+    <h1>VICK DATAFLOW - Procter & Gamble</h1>
+    <p>Análisis de demanda e inventarios | Vick Vaporub</p>
 
-  <!-- Inventarios y Tendencias -->
-  <div class="row">
-    <div class="card">
-      <h3 id="inventarios">Inventarios por ciudad</h3>
-      <div class="inventario-controls">
-        <button class="btn" onclick="setInventarioMode('porcentaje')">📦 Inventario %</button>
-        <button class="btn" onclick="setInventarioMode('unidades')">📦 Unidades</button>
-        <button class="btn" onclick="setInventarioMode('riesgo')">⚠️ Nivel riesgo</button>
-        <button class="btn secondary" onclick="filtrarCiudad('Bogotá')">🏙 Bogotá</button>
-        <button class="btn secondary" onclick="filtrarCiudad('Medellín')">🏙 Medellín</button>
-        <button class="btn secondary" onclick="filtrarCiudad('Cali')">🏙 Cali</button>
-        <button class="btn" onclick="resetInventarios()">🔁 Ver todo</button>
-      </div>
-      <div class="chart-container"><canvas id="inventarioChart"></canvas></div>
+    <button id="exportPdfBtn">⬇ Exportar PDF</button>
+    <button id="darkModeBtn">🌙 Modo oscuro</button>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="card">
+        <h3>Demanda y Proyección IA</h3>
+        <div class="chart-container"><canvas id="demandaChart"></canvas></div>
+        <br>
+        <h4>Proyección IA (6 días)</h4>
+        <div class="chart-container"><canvas id="prediccionChart"></canvas></div>
     </div>
 
-    <div class="card">
-      <h3>Tendencias</h3>
-      <div class="small" style="margin-bottom:8px">Selecciona ciudad para ver detalles</div>
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <button class="btn" onclick="cambiarCiudad('Bogotá')">Bogotá</button>
-        <button class="btn" onclick="cambiarCiudad('Medellín')">Medellín</button>
-        <button class="btn" onclick="cambiarCiudad('Cali')">Cali</button>
-      </div>
-      <div class="chart-container"><canvas id="tendenciasChart"></canvas></div>
+    <!-- Inventarios -->
+    <div id="inventarios" class="card">
+        <h3>Inventarios por ciudad</h3>
+        <div class="chart-container"><canvas id="inventarioChart"></canvas></div>
     </div>
-  </div>
 
-  <!-- Mapa -->
-  <div id="mapa" class="card">
-    <h3>Mapa interactivo de inventarios</h3>
-    <div id="map"></div>
-  </div>
-
-  <!-- Histórico -->
-  <div id="historico" class="card">
-    <h3>Histórico mensual</h3>
-    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-      <label for="monthSelect">Seleccione mes:</label>
-      <select id="monthSelect" style="padding:8px;border-radius:6px;border:1px solid #ddd">
-        <option value="0">Enero</option>
-        <option value="1">Febrero</option>
-        <option value="2">Marzo</option>
-        <option value="3" selected>Abril</option>
-        <option value="4">Mayo</option>
-        <option value="5">Junio</option>
-        <option value="6">Julio</option>
-        <option value="7">Agosto</option>
-        <option value="8">Septiembre</option>
-        <option value="9">Octubre</option>
-        <option value="10">Noviembre</option>
-        <option value="11">Diciembre</option>
-      </select>
+    <!-- Tendencias -->
+    <div id="tendencias" class="card">
+        <h3>Tendencias</h3>
+        <div class="chart-container"><canvas id="tendenciasChart"></canvas></div>
     </div>
-    <div class="chart-container"><canvas id="historicoChart"></canvas></div>
-  </div>
+
+    <!-- Mapa -->
+    <div id="mapa" class="card">
+        <h3>Mapa Interactivo de Inventarios</h3>
+        <div id="map" style="height:380px;"></div>
+    </div>
+
+    <!-- Histórico -->
+    <div id="historico" class="card">
+        <h3>Histórico mensual</h3>
+        <select id="monthSelect">
+            <option value="0">Enero</option>
+            <option value="1">Febrero</option>
+            <option value="2">Marzo</option>
+            <option value="3" selected>Abril</option>
+        </select>
+        <div class="chart-container"><canvas id="historicoChart"></canvas></div>
+    </div>
+
 </div>
 
-<!-- Avatar y Chat -->
-<div id="avatar-btn" title="Asistente Mamá Vicky">
-  <img src="Vicky.png" alt="Mamá Vicky" stylediv class="chat-header">Mamá Vicky - Asistente Vick</div>
-  <div id="chat-body" class="chat-body">
-    <div class="msg-bot">Hola 👋 Soy <b>Mamá Vicky</b>, tu asistente Vick. Puedo ayudar con inventarios, tendencias y recomendaciones.</div>
-  </div>
-  <div class="chat-input">
-    <input id="chatInput" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter') sendChat()" />
-    <button onclick="sendChat()">Enviar</button>
-  </div>
+<!-- ▬▬▬ BOTON AVATAR ▬▬▬ -->
+<div id="avatar-btn">
+    <img src="Vicky.png" alt="Mamá Vicky">
 </div>
 
-<div id="notification" class="notification"></div>
+<!-- ▬▬▬ CHAT PANEL ▬▬▬ -->
+<div id="chat-panel">
+    <div class="chat-header">Mamá Vicky - Asistente Vick</div>
+    <div id="chat-body" class="chat-body">
+        <div class="msg-bot">Hola, soy Mamá Vicky. ¿En qué puedo ayudarte?</div>
+    </div>
+    <div class="chat-input">
+        <input id="chatInput" placeholder="Escribe tu pregunta...">
+        <button onclick="sendChat()">Enviar</button>
+    </div>
+</div>
 
+<!-- ▬▬▬ JAVASCRIPT ▬▬▬ -->
 <script>
-/* Aquí va TODO el código JS que me enviaste (gráficas, mapa, chatbot, exportación, modo oscuro) */
+
+// Mostrar/Ocultar chat
+document.getElementById("avatar-btn").onclick = () => {
+    let panel = document.getElementById("chat-panel");
+    panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+};
+
+// Enviar mensaje del chat
+function sendChat(){
+    let input = document.getElementById("chatInput");
+    if(input.value.trim()==="") return;
+
+    let box = document.getElementById("chat-body");
+
+    // Mensaje usuario
+    box.innerHTML += `<div class="msg-user">${input.value}</div>`;
+
+    // Respuesta bot
+    box.innerHTML += `<div class="msg-bot">Estoy procesando tu consulta 😊</div>`;
+
+    input.value = "";
+    box.scrollTop = box.scrollHeight;
+}
+
+/* ▬▬▬ GRÁFICAS ▬▬▬ */
+
+const simpleLabels = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+
+new Chart(document.getElementById("demandaChart"), {
+  type: "line",
+  data: {
+    labels: simpleLabels,
+    datasets:[{
+      label:"Demanda Real",
+      data:[20,25,30,28,32,40,38],
+      borderColor:"#1a73e8"
+    }]
+  }
+});
+
+new Chart(document.getElementById("prediccionChart"), {
+  type:"bar",
+  data:{
+    labels:["Día 1","Día 2","Día 3","Día 4","Día 5","Día 6"],
+    datasets:[{
+      label:"Predicción IA",
+      data:[30,35,40,42,45,47],
+      backgroundColor:"#009e60"
+    }]
+  }
+});
+
+new Chart(document.getElementById("inventarioChart"), {
+  type:"bar",
+  data:{
+    labels:["Bogotá","Medellín","Cali"],
+    datasets:[{
+      label:"Inventario %",
+      data:[80,55,70],
+      backgroundColor:["#004c97","#1a73e8","#009e60"]
+    }]
+  }
+});
+
+new Chart(document.getElementById("tendenciasChart"), {
+  type:"line",
+  data:{
+    labels:simpleLabels,
+    datasets:[{
+      label:"Tendencia",
+      data:[10,20,40,30,50,45,60],
+      borderColor:"#004c97"
+    }]
+  }
+});
+
+new Chart(document.getElementById("historicoChart"), {
+  type:"bar",
+  data:{
+    labels:["Semana 1","Semana 2","Semana 3","Semana 4"],
+    datasets:[{
+      label:"Ventas",
+      data:[100,140,120,160],
+      backgroundColor:"#1a73e8"
+    }]
+  }
+});
+
+/* ▬▬▬ MAPA ▬▬▬ */
+let map = L.map('map').setView([4.65,-74.1], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom:18,
+}).addTo(map);
+
+L.marker([4.65,-74.1]).addTo(map).bindPopup("Bogotá");
+L.marker([6.24,-75.58]).addTo(map).bindPopup("Medellín");
+L.marker([3.45,-76.53]).addTo(map).bindPopup("Cali");
+
+/* ▬▬▬ EXPORTAR PDF ▬▬▬ */
+document.getElementById("exportPdfBtn").onclick = () => {
+    html2canvas(document.body).then(canvas => {
+        const img = canvas.toDataURL("image/png");
+        const pdf = new jspdf.jsPDF("p","mm","a4");
+        pdf.addImage(img,"PNG",0,0,210,0);
+        pdf.save("VICK_DATAFLOW.pdf");
+    });
+};
+
+/* ▬▬▬ MODO OSCURO ▬▬▬ */
+document.getElementById("darkModeBtn").onclick = () => {
+    document.documentElement.classList.toggle("dark");
+};
+
 </script>
 
 </body>

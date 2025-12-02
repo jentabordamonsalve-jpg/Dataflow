@@ -7,51 +7,55 @@
 
   <style>
     body {
-      background: #e6fff3;
       font-family: Arial, sans-serif;
-      padding: 20px;
+      background: #e9f8f1;
+      margin: 0;
+      padding: 40px;
       text-align: center;
     }
 
     .card {
-      background: white;
-      padding: 20px;
-      max-width: 400px;
+      max-width: 600px;
       margin: auto;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
     }
 
     img {
-      width: 200px;
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #0b6848;
       margin-bottom: 10px;
     }
+
+    p {
+      color: #333;
+    }
   </style>
+
 </head>
-
 <body>
-
   <div class="card">
-    <img src="vicky.png.png" alt="Vicky IA" />
-
-    <h1>Mamá Vicky</h1>
-    <p>Tu asistente de datos Vick</p>
-
-    <pre id="resultado">Cargando datos...</pre>
+    <img src="vicky.png" alt="Vick Logo">
+    <h1>Dataflow Vick</h1>
+    <p>Plataforma de datos en tonos verdes estilo Vick ✔️</p>
+    <p>Cargando datos...</p>
   </div>
 
   <script>
     fetch("vick-data.json")
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        document.getElementById("resultado").innerText =
-          JSON.stringify(data.producto, null, 2);
+        console.log("Datos cargados correctamente:", data);
       })
-      .catch(err => {
-        document.getElementById("resultado").innerText =
-          "Error al cargar el JSON";
+      .catch(error => {
+        console.error("Error cargando el JSON:", error);
       });
   </script>
-
 </body>
 </html>

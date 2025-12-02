@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataflow Vick</title>
+
+  <style>
+    body {
+      background: #e6fff3;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    img {
+      width: 200px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <img src="vicky.png.png" alt="Vicky IA" />
+
+    <h1>Mamá Vicky</h1>
+    <p>Tu asistente de datos Vick</p>
+
+    <pre id="resultado">Cargando datos...</pre>
+  </div>
+
+  <script>
+    fetch("vick-data.json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("resultado").innerText =
+          JSON.stringify(data.producto, null, 2);
+      })
+      .catch(err => {
+        document.getElementById("resultado").innerText =
+          "Error al cargar el JSON";
+      });
+  </script>
+
+</body>
+</html>

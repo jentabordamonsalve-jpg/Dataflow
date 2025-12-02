@@ -1,39 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>VICK DATAFLOW</title>
 
     <style>
+        /* Variables --white: #ffffff;        /* Variables de color */
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset y base */
         body {
             font-family: Arial, sans-serif;
-            background: #e7f5ee;
+            background: var(--background);
             margin: 0;
             padding: 0;
-            color: #054b35;
+            color: var(--text-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            background-color: var(--vick-green);
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar nav a:hover {
+            background-color: var(--vick-green-dark);
+        }
+
+        /* Contenido principal */
+        .main-content {
+            margin-left: 240px; /* espacio para sidebar */
+            padding: 20px;
         }
 
         header {
-            background: #0b8f67;
+            background: var(--vick-green);
             padding: 25px;
             text-align: center;
             color: white;
             font-size: 28px;
             font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 20px;
         }
 
         .section {
             padding: 25px;
-            margin: 20px;
-            background: white;
+            margin-bottom: 20px;
+            background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .section h2 {
-            color: #0b8f67;
+            color: var(--vick-green);
             margin-bottom: 10px;
+        }
+
+        .section ul {
+            padding-left: 20px;
         }
 
         .avatar {
@@ -48,79 +102,146 @@
             border-radius: 15px;
             font-size: 18px;
             margin-bottom: 10px;
-            border: 1px solid #0b8f67;
+            border: 1px solid var(--vick-green);
+            max-width: 400px;
         }
 
         footer {
-            background: #0b8f67;
+            background: var(--vick-green);
             text-align: center;
             padding: 15px;
             color: white;
             margin-top: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* Botón flotante avatar */
+        #avatar-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: var(--vick-green);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+        }
+
+        #avatar-btn img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+                font-size: 16px;
+            }
+            .main-content {
+                margin-left: 190px;
+                padding: 15px;
+            }
+            header {
+                font-size: 24px;
+                padding: 20px;
+            }
         }
     </style>
 </head>
-
 <body>
 
-<header>
-    🌿 VICK DATAFLOW – Plataforma Inteligente de Demanda y Abastecimiento
-</header>
-
-<section class="section">
-    <h2>¿Qué es VICK DATAFLOW?</h2>
-    <p>
-        Vick DataFlow es una plataforma digital que integra datos de ventas, demanda estacional,
-        inventarios, clima y comportamiento digital del consumidor en un solo dashboard inteligente.
-        Su objetivo es optimizar la planeación de demanda, abastecimiento y disponibilidad de VapoRub 
-        en Colombia.
-    </p>
-</section>
-
-<section class="section">
-    <h2>Problema Actual</h2>
-    <ul>
-        <li>Demanda altamente estacional (clima, lluvias, época escolar).</li>
-        <li>Desabastecimiento en zonas críticas.</li>
-        <li>Sobreinventario en zonas de baja rotación.</li>
-        <li>Pérdida de ventas digitales por falta de stock.</li>
-        <li>Baja coordinación entre logística, ventas y marketing.</li>
-    </ul>
-</section>
-
-<section class="section">
-    <h2>¿Qué Soluciona el Aplicativo?</h2>
-    <ul>
-        <li>Predicción inteligente de demanda.</li>
-        <li>Alertas automáticas de alta demanda.</li>
-        <li>Estado de inventarios en tiempo real.</li>
-        <li>Redistribución inteligente de SKUs.</li>
-        <li>Monitoreo de clima y tendencias digitales.</li>
-        <li>Reportes avanzados para marketing y ventas.</li>
-    </ul>
-</section>
-
-<section class="section">
-    <h2>Funciones principales del Sistema</h2>
-    <ul>
-        <li>📊 Dashboard de demanda predictiva.</li>
-        <li>📦 Integración de inventarios por ciudad o retailer.</li>
-        <li>🔥 Monitor de tendencias digitales (búsquedas, redes, clima).</li>
-        <li>🚚 Módulo de abastecimiento inteligente.</li>
-        <li>📈 Reportes automáticos.</li>
-    </ul>
-</section>
-
-<section class="section avatar">
-    <div class="bubble">
-        ¡Hola! Soy Vicky, tu asistente virtual para entender los datos de VapoRub 🌿  
-        ¿Quieres ver recomendaciones, tendencias o inventarios?
+    <div class="sidebar">
+        <h2>VICK DATAFLOW</h2>
+        <nav>
+            #dashboardDashboard</a>
+            #inventariosInventarios</a>
+            #tendenciasTendencias</a>
+            #recomendacionesRecomendaciones</a>
+            #mapaMapa Interactivo</a>
+            #historicoHistórico Mensual</a>
+        </nav>
     </div>
-</section>
 
-<footer>
-    © 2025 VICK DATAFLOW – Proyecto de Mejora Operativa
-</footer>
+    <div class="main-content">
+        <header>
+            🌿 VICK DATAFLOW – Plataforma Inteligente de Demanda y Abastecimiento
+        </header>
+
+        <section id="dashboard" class="section">
+            <h2>¿Qué es VICK DATAFLOW?</h2>
+            <p>
+                Vick DataFlow es una plataforma digital que integra datos de ventas, demanda estacional,
+                inventarios, clima y comportamiento digital del consumidor en un solo dashboard inteligente.
+                Su objetivo es optimizar la planeación de demanda, abastecimiento y disponibilidad de VapoRub 
+                en Colombia.
+            </p>
+        </section>
+
+        <section id="problema" class="section">
+            <h2>Problema Actual</h2>
+            <ul>
+                <li>Demanda altamente estacional (clima, lluvias, época escolar).</li>
+                <li>Desabastecimiento en zonas críticas.</li>
+                <li>Sobreinventario en zonas de baja rotación.</li>
+                <li>Pérdida de ventas digitales por falta de stock.</li>
+                <li>Baja coordinación entre logística, ventas y marketing.</li>
+            </ul>
+        </section>
+
+        <section id="solucion" class="section">
+            <h2>¿Qué Soluciona el Aplicativo?</h2>
+            <ul>
+                <li>Predicción inteligente de demanda.</li>
+                <li>Alertas automáticas de alta demanda.</li>
+                <li>Estado de inventarios en tiempo real.</li>
+                <li>Redistribución inteligente de SKUs.</li>
+                <li>Monitoreo de clima y tendencias digitales.</li>
+                <li>Reportes avanzados para marketing y ventas.</li>
+            </ul>
+        </section>
+
+        <section id="funciones" class="section">
+            <h2>Funciones principales del Sistema</h2>
+            <ul>
+                <li>📊 Dashboard de demanda predictiva.</li>
+                <li>📦 Integración de inventarios por ciudad o retailer.</li>
+                <li>🔥 Monitor de tendencias digitales (búsquedas, redes, clima).</li>
+                <li>🚚 Módulo de abastecimiento inteligente.</li>
+                <li>📈 Reportes automáticos.</li>
+            </ul>
+        </section>
+
+        <section class="section avatar">
+            <div class="bubble">
+                ¡Hola! Soy Vicky, tu asistente virtual para entender los datos de VapoRub 🌿  
+                ¿Quieres ver recomendaciones, tendencias o inventarios?
+            </div>
+        </section>
+
+        <footer>
+            © 2025 VICK DATAFLOW – Proyecto de Mejora Operativa
+        </footer>
+    </div>
+
+    <!-- Botón flotante avatar -->
+    <div id="avatar-btn" title="Hablar con Mamá Vicky">
+        Vicky.png
+    </div>
 
 </body>
 </html>
+        :root {
+            --vick-green: #0b8f67;
+            --vick-green-dark: #0a7a56;
+            --background: #e7f5ee;
+            --text-color: #054b35;
